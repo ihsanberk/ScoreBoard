@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.ihsanberk.scoreboard.MainActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_000"
+        android:textColor="@android:color/holo_red_light"
+        android:id="@+id/txtOyuncuBir"
+        android:textSize="150sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="000"
+        android:textColor="@android:color/holo_red_light"
+        android:id="@+id/txtOyuncuIki"
+        android:layout_alignTop="@+id/txtOyuncuBir"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:textSize="150sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0000"
+        android:textColor="@android:color/holo_red_light"
+        android:id="@+id/txtOrtalamaBir"
+        android:textSize="75sp"
+        android:layout_alignTop="@+id/txtIstakaSayısı"
+        android:layout_alignLeft="@+id/txtOyuncuBir"
+        android:layout_alignStart="@+id/txtOyuncuBir" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0000"
+        android:textColor="@android:color/holo_red_light"
+        android:id="@+id/txtOrtalamaIki"
+        android:textSize="75sp"
+        android:layout_alignTop="@+id/txtIstakaSayısı"
+        android:layout_alignRight="@+id/txtOyuncuIki"
+        android:layout_alignEnd="@+id/txtOyuncuIki" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="00"
+        android:textColor="@android:color/holo_red_light"
+        android:id="@+id/txtIstakaSayısı"
+        android:textSize="40sp"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="GERİ"
+        android:id="@+id/btnOyuncuBirAzalt"
+        android:layout_alignLeft="@+id/txtOrtalamaBir"
+        android:layout_alignStart="@+id/txtOrtalamaBir"
+        android:layout_below="@+id/txtOrtalamaBir"
+        android:layout_above="@+id/btnReset" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SAYI"
+        android:id="@+id/btnOyuncuBirArttir"
+        android:layout_alignBottom="@+id/btnOyuncuBirAzalt"
+        android:layout_toRightOf="@+id/btnOyuncuBirAzalt"
+        android:layout_below="@+id/txtOrtalamaBir" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="GİRİŞ"
+        android:id="@+id/btnOyuncuBirEnter"
+        android:layout_alignBottom="@+id/btnOyuncuBirArttir"
+        android:layout_toRightOf="@+id/btnOyuncuBirArttir"
+        android:layout_alignTop="@+id/btnOyuncuBirArttir" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="GİRİŞ"
+        android:id="@+id/btnOyuncuIkiEnter"
+        android:layout_alignTop="@+id/btnOyuncuBirEnter"
+        android:layout_alignRight="@+id/txtOrtalamaIki"
+        android:layout_alignEnd="@+id/txtOrtalamaIki"
+        android:layout_above="@+id/btnReset" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SAYI"
+        android:id="@+id/btnOyuncuIkiArttir"
+        android:layout_alignTop="@+id/btnOyuncuIkiEnter"
+        android:layout_toLeftOf="@+id/btnOyuncuIkiEnter"
+        android:layout_toStartOf="@+id/btnOyuncuIkiEnter"
+        android:layout_above="@+id/btnReset" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="GERİ"
+        android:id="@+id/btnOyuncuIkiAzalt"
+        android:layout_alignTop="@+id/btnOyuncuIkiArttir"
+        android:layout_toLeftOf="@+id/btnOyuncuIkiArttir"
+        android:layout_toStartOf="@+id/btnOyuncuIkiArttir"
+        android:layout_above="@+id/btnReset" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SIFIRLA"
+        android:id="@+id/btnReset"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Istaka Sayısı"
+        android:textColor="@android:color/black"
+        android:id="@+id/txtElsayisi"
+        android:layout_below="@+id/txtIstakaSayısı"
+        android:layout_centerHorizontal="true"
+        android:textSize="30sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="En Yüksek Seri : 0"
+        android:textColor="@android:color/holo_red_light"
+        android:id="@+id/txtMaksimumBir"
+        android:textSize="30sp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="En Yüksek Seri : 0"
+        android:textColor="@android:color/holo_red_light"
+        android:id="@+id/txtMaksimumIki"
+        android:textSize="30sp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Oyuncu A"
+        android:id="@+id/textView"
+        android:layout_above="@+id/txtOrtalamaBir"
+        android:layout_alignRight="@+id/txtOrtalamaBir"
+        android:layout_alignEnd="@+id/txtOrtalamaBir"
+        android:textColor="@android:color/black" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Oyuncu B"
+        android:id="@+id/textView2"
+        android:layout_above="@+id/txtOrtalamaIki"
+        android:layout_alignLeft="@+id/txtOrtalamaIki"
+        android:layout_alignStart="@+id/txtOrtalamaIki"
+        android:textColor="@android:color/black" />
+
+</RelativeLayout>

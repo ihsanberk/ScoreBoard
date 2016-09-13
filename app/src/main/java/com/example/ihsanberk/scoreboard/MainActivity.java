@@ -1,14 +1,22 @@
 package com.example.ihsanberk.scoreboard;
 
+import android.database.sqlite.SQLiteDatabase;
+import android.icu.text.SimpleDateFormat;
+import android.icu.util.Calendar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import models.Match;
 
 public class MainActivity extends AppCompatActivity {
 
+    SQLiteDatabase db=null;
 
     TextView txt_hand_count;
 
@@ -27,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     Button btn_player2_enter;
 
     Button btn_reset;
+    Button btn_record;
 
     int cekilen_sayi_bir=0;
     int toplam_sayi_bir=0;
@@ -43,12 +52,17 @@ public class MainActivity extends AppCompatActivity {
 
     int istaka_sayisi=0;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+      //  db= openOrCreateDatabase("OyunArsiv", MODE_PRIVATE,null);
+        String createQuery= "Create table if not exists matchs ( _id integer primary key autoincrement,ponename text, ptwoname text, " +
+                                                    "handcoount int, ponescore int, ptwoscore int, poneaverage text, ptwoaverage text, " +
+                                                    "ponemax int, ptwomax int , date text);";
+    //    db.execSQL(createQuery);
+
 
         txt_hand_count= (TextView) findViewById(R.id.txtIstakaSayısı);
         txt_max_score1= (TextView) findViewById(R.id.txtMaksimumBir);
@@ -67,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
         btn_player2_enter= (Button) findViewById(R.id.btnOyuncuIkiEnter);
 
         btn_reset= (Button) findViewById(R.id.btnReset);
+      //  btn_record = (Button) findViewById(R.id.btnKaydet);
 
         btn_player1_plus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -156,6 +171,47 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        /*btn_record.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+             //   RecordMatch();
+
+            }
+        });*/
+
+
+    }
+
+    private void RecordMatch() {
+        Match match=new Match();
+        match.setHandCount(istaka_sayisi);
+        match.setpOneAverage(Float.toString(ortalama_bir));
+        match.setpTwoAverage(Float.toString(ortalama_iki));
+        match.setpOneMax(maks_sayi_bir);
+        match.setpTwoMax(maks_sayi_iki);
+        match.setpOneScore(toplam_sayi_bir);
+        match.setpTwoScore(toplam_sayi_iki);
+
+        AddTable(match);
+        Toast.makeText(this,"Skor Kaydedildi.",Toast.LENGTH_SHORT).show();
+
+    }
+
+    private void AddTable(Match match) {
+        db =openOrCreateDatabase("OyunArsiv", MODE_PRIVATE,null);
+        //tarih nasıl alınır yazılacak
+        String matchDate = "23.09.1988 05:30:00";
+
+        String insertQuery = "insert into matchs(ponename , ptwoname ," +
+                "handcoount , ponescore , ptwoscore , poneaverage , ptwoaverage ,"+
+                "ponemax , ptwomax  , date ) values('";
+        insertQuery+= match.getpOneName()+"','"+match.getpTwoName()+"',"+match.getHandCount()+","+match.getpOneScore()+",";
+        insertQuery+= match.getpTwoScore()+",'"+match.getpOneAverage()+"','"+match.getpTwoAverage()+"',"+match.getpOneMax()+",";
+        insertQuery+= +match.getpTwoMax()+",'"+matchDate+"');";
+
+        db.execSQL(insertQuery);
+
 
     }
 
@@ -179,17 +235,21 @@ public class MainActivity extends AppCompatActivity {
     public void OrtalamaYazdir(){
         ortalama_bir=(float)toplam_sayi_bir/(float)istaka_sayisi;
 
-        if(hand_flag)
+        if(hand_flag){
             if(istaka_sayisi>1)
                 ortalama_iki=(float)toplam_sayi_iki/(float)(istaka_sayisi-1);
+            if(istaka_sayisi==1)
+                ortalama_iki=0;
+        }
         if(!hand_flag)
             ortalama_iki=(float)toplam_sayi_iki/(float)istaka_sayisi;
-        String str = String.format("%2.03f", ortalama_bir);
-        String str2 = String.format("%2.03f", ortalama_iki);
-        if(istaka_sayisi>1){
+        String str = String.format("%3.03f", ortalama_bir);
+        String str2 = String.format("%3.03f", ortalama_iki);
+        if(istaka_sayisi>0){
             txt_player1_average.setText(str);
             txt_player2_average.setText(str2);
         }
+
 //deneme
     }
     public void MaksimumYazdir(int maksimum,int oyuncu){

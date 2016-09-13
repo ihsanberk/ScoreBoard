@@ -68,25 +68,25 @@
         android:layout_alignLeft="@+id/txtOrtalamaBir"
         android:layout_alignStart="@+id/txtOrtalamaBir"
         android:layout_below="@+id/txtOrtalamaBir"
-        android:layout_above="@+id/btnReset" />
+        android:layout_alignBottom="@+id/btnOyuncuIkiAzalt" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="SAYI"
         android:id="@+id/btnOyuncuBirArttir"
-        android:layout_alignBottom="@+id/btnOyuncuBirAzalt"
         android:layout_toRightOf="@+id/btnOyuncuBirAzalt"
-        android:layout_below="@+id/txtOrtalamaBir" />
+        android:layout_below="@+id/txtOrtalamaBir"
+        android:layout_above="@+id/btnReset" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="GİRİŞ"
         android:id="@+id/btnOyuncuBirEnter"
-        android:layout_alignBottom="@+id/btnOyuncuBirArttir"
         android:layout_toRightOf="@+id/btnOyuncuBirArttir"
-        android:layout_alignTop="@+id/btnOyuncuBirArttir" />
+        android:layout_alignTop="@+id/btnOyuncuBirArttir"
+        android:layout_above="@+id/btnReset" />
 
     <Button
         android:layout_width="wrap_content"
@@ -116,7 +116,7 @@
         android:layout_alignTop="@+id/btnOyuncuIkiArttir"
         android:layout_toLeftOf="@+id/btnOyuncuIkiArttir"
         android:layout_toStartOf="@+id/btnOyuncuIkiArttir"
-        android:layout_above="@+id/btnReset" />
+        android:layout_alignBottom="@+id/btnOyuncuIkiArttir" />
 
     <Button
         android:layout_width="wrap_content"
@@ -124,7 +124,8 @@
         android:text="SIFIRLA"
         android:id="@+id/btnReset"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignLeft="@+id/txtIstakaSayısı"
+        android:layout_alignStart="@+id/txtIstakaSayısı" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -164,10 +165,11 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Oyuncu A"
         android:id="@+id/textView"
-        android:layout_above="@+id/txtOrtalamaBir"
-        android:layout_alignRight="@+id/txtOrtalamaBir"
-        android:layout_alignEnd="@+id/txtOrtalamaBir"
-        android:textColor="@android:color/black" />
+        android:textColor="@android:color/black"
+        android:textSize="40sp"
+        android:layout_below="@+id/txtOyuncuBir"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -175,9 +177,12 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Oyuncu B"
         android:id="@+id/textView2"
-        android:layout_above="@+id/txtOrtalamaIki"
-        android:layout_alignLeft="@+id/txtOrtalamaIki"
-        android:layout_alignStart="@+id/txtOrtalamaIki"
-        android:textColor="@android:color/black" />
+        android:textColor="@android:color/black"
+        android:textSize="40sp"
+        android:layout_below="@+id/txtOyuncuIki"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+
 
 </RelativeLayout>

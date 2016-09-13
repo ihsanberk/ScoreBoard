@@ -190,7 +190,7 @@ public class MainActivity extends AppCompatActivity {
             txt_player1_average.setText(str);
             txt_player2_average.setText(str2);
         }
-
+//deneme
     }
     public void MaksimumYazdir(int maksimum,int oyuncu){
         if(oyuncu==1)

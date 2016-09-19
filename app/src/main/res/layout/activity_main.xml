@@ -164,7 +164,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Oyuncu A"
-        android:id="@+id/textView"
+        android:id="@+id/txtPoneName"
         android:textColor="@android:color/black"
         android:textSize="40sp"
         android:layout_below="@+id/txtOyuncuBir"
@@ -176,13 +176,33 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Oyuncu B"
-        android:id="@+id/textView2"
+        android:id="@+id/txtPtwoName"
         android:textColor="@android:color/black"
         android:textSize="40sp"
         android:layout_below="@+id/txtOyuncuIki"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Kaydet"
+        android:id="@+id/btnKaydet"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/txtElsayisi"
+        android:layout_toEndOf="@+id/txtElsayisi" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ARŞİV"
+        android:id="@+id/btnArsiv"
+        android:layout_marginRight="29dp"
+        android:layout_marginEnd="29dp"
+        android:layout_alignTop="@+id/btnReset"
+        android:layout_toLeftOf="@+id/btnReset"
+        android:layout_toStartOf="@+id/btnReset"
+        android:onClick="OpenHistory" />
 
 
 </RelativeLayout>

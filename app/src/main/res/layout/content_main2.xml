@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.ihsanberk.scoreboard.Main2Activity"
+    tools:showIn="@layout/activity_main2">
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/listView2"
+        android:layout_above="@+id/btnGeri"
+        android:textFilterEnabled="false"
+        android:layout_below="@+id/txtBaslik" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/GERİ"
+        android:id="@+id/btnGeri"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Oyuncu 1                  Oyuncu 2               Istaka      Skor 1    Skor 2      Ort. 1       Ort. 2       Max 1      Max 2               Tarih"
+        android:id="@+id/txtBaslik"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/listView2"
+        android:layout_alignEnd="@+id/listView2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TEMİZLE"
+        android:id="@+id/btnSifirla"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/btnGeri"
+        android:layout_toStartOf="@+id/btnGeri"
+        android:layout_marginRight="50dp"
+        android:layout_marginEnd="50dp" />
+</RelativeLayout>

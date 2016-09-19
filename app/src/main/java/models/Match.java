@@ -5,7 +5,7 @@ package models;
  */
 public class Match {
     String pOneName="Oyuncu A";
-    String pTwoName="Oyuncu B";
+    String pTwoName="Oyuncu C";
     int handCount=0;
     int pOneScore=0;
     int pTwoScore=0;

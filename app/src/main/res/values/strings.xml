@@ -1,7 +1,10 @@
 <resources>
-    <string name="app_name">ScoreBoard</string>
+    <string name="app_name">CENTİLMEN CAFE</string>
     <string name="plus">PLUS</string>
     <string name="minus">MINUS</string>
     <string name="_000">000</string>
     <string name="sifirla">SIFIRLA</string>
+    <string name="title_activity_main2">ÖNCEKİ OYUNLAR</string>
+    <string name="GERİ">GERİ</string>
+    <string name="pass">PBS06</string>
 </resources>

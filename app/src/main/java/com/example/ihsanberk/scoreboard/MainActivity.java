@@ -1,16 +1,25 @@
 package com.example.ihsanberk.scoreboard;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.format.DateFormat;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.security.Timestamp;
+import java.sql.Time;
 
 import models.Match;
 
@@ -23,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     TextView txt_max_score1;
     TextView txt_player1_score;
     TextView txt_player1_average;
+    TextView txt_Pone_name;
     Button btn_player1_plus;
     Button btn_player1_minus;
     Button btn_player1_enter;
@@ -30,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     TextView txt_max_score2;
     TextView txt_player2_score;
     TextView txt_player2_average;
+    TextView txt_Ptwo_name;
     Button btn_player2_plus;
     Button btn_player2_minus;
     Button btn_player2_enter;
@@ -57,16 +68,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-      //  db= openOrCreateDatabase("OyunArsiv", MODE_PRIVATE,null);
-        String createQuery= "Create table if not exists matchs ( _id integer primary key autoincrement,ponename text, ptwoname text, " +
-                                                    "handcoount int, ponescore int, ptwoscore int, poneaverage text, ptwoaverage text, " +
+        db= openOrCreateDatabase("OyunArsiv", MODE_PRIVATE,null);
+        String createQuery= "Create table if not exists matchs ( id integer primary key autoincrement,ponename text, ptwoname text, " +
+                                                    "handcount int, ponescore int, ptwoscore int, poneaverage text, ptwoaverage text, " +
                                                     "ponemax int, ptwomax int , date text);";
-    //    db.execSQL(createQuery);
+        db.execSQL(createQuery);
+        db.close();
 
 
         txt_hand_count= (TextView) findViewById(R.id.txtIstakaSayısı);
         txt_max_score1= (TextView) findViewById(R.id.txtMaksimumBir);
         txt_max_score2= (TextView) findViewById(R.id.txtMaksimumIki);
+        txt_Pone_name= (TextView) findViewById(R.id.txtPoneName);
+        txt_Ptwo_name= (TextView) findViewById(R.id.txtPtwoName);
 
         txt_player1_score= (TextView) findViewById(R.id.txtOyuncuBir);
         txt_player1_average= (TextView) findViewById(R.id.txtOrtalamaBir);
@@ -81,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
         btn_player2_enter= (Button) findViewById(R.id.btnOyuncuIkiEnter);
 
         btn_reset= (Button) findViewById(R.id.btnReset);
-      //  btn_record = (Button) findViewById(R.id.btnKaydet);
+        btn_record = (Button) findViewById(R.id.btnKaydet);
 
         btn_player1_plus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -171,46 +185,86 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        /*btn_record.setOnClickListener(new View.OnClickListener() {
+        btn_record.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-             //   RecordMatch();
+                RecordMatch();
 
             }
-        });*/
+        });
 
+        txt_Pone_name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showInputDialog(txt_Pone_name);
+            }
+        });
+
+        txt_Ptwo_name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showInputDialog(txt_Ptwo_name);
+            }
+        });
 
     }
 
     private void RecordMatch() {
         Match match=new Match();
+        match.setpOneName(txt_Pone_name.getText().toString());
+        match.setpTwoName(txt_Ptwo_name.getText().toString());
         match.setHandCount(istaka_sayisi);
-        match.setpOneAverage(Float.toString(ortalama_bir));
-        match.setpTwoAverage(Float.toString(ortalama_iki));
+        String str = String.format("%3.03f", ortalama_bir);
+        match.setpOneAverage(str);
+        String str2 = String.format("%3.03f", ortalama_iki);
+        match.setpTwoAverage(str2);
         match.setpOneMax(maks_sayi_bir);
         match.setpTwoMax(maks_sayi_iki);
         match.setpOneScore(toplam_sayi_bir);
         match.setpTwoScore(toplam_sayi_iki);
 
-        AddTable(match);
-        Toast.makeText(this,"Skor Kaydedildi.",Toast.LENGTH_SHORT).show();
+        if(istaka_sayisi>0){
+            AddTable(match);
+            showToast("Skor Kaydedildi.");
+           // Toast.makeText(this,"Skor Kaydedildi.",Toast.LENGTH_SHORT).show();
+        }
+        if(istaka_sayisi<1){
+            showToast("Kaydedilecek Skor bulunmamaktadır!!!");
+        }
+
 
     }
+
+    public void showToast(final String toast)
+    {
+        runOnUiThread(new Runnable() {
+            public void run()
+            {
+                Toast.makeText(MainActivity.this, toast, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 
     private void AddTable(Match match) {
         db =openOrCreateDatabase("OyunArsiv", MODE_PRIVATE,null);
         //tarih nasıl alınır yazılacak
         String matchDate = "23.09.1988 05:30:00";
+       // java.util.Date date= new java.util.Date();
+
+       // java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd.MM.YYYY HH:mm:ss");
+        matchDate = new java.text.SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new java.util.Date());
+
 
         String insertQuery = "insert into matchs(ponename , ptwoname ," +
-                "handcoount , ponescore , ptwoscore , poneaverage , ptwoaverage ,"+
+                "handcount , ponescore , ptwoscore , poneaverage , ptwoaverage ,"+
                 "ponemax , ptwomax  , date ) values('";
         insertQuery+= match.getpOneName()+"','"+match.getpTwoName()+"',"+match.getHandCount()+","+match.getpOneScore()+",";
         insertQuery+= match.getpTwoScore()+",'"+match.getpOneAverage()+"','"+match.getpTwoAverage()+"',"+match.getpOneMax()+",";
         insertQuery+= +match.getpTwoMax()+",'"+matchDate+"');";
 
         db.execSQL(insertQuery);
+        db.close();
 
 
     }
@@ -294,9 +348,59 @@ public class MainActivity extends AppCompatActivity {
         txt_player2_score.setText("000");
         txt_hand_count.setText("00");
         txt_max_score1.setText("00");
+        txt_Pone_name.setText("Oyuncu A");
+        txt_Ptwo_name.setText("Oyuncu B");
 
         MaksimumYazdir(0,0);
+    }
 
+    public void OpenHistory(View view){
+
+        Intent OpenHistory = new Intent(this, Main2Activity.class);
+        startActivity(OpenHistory);
+    }
+
+
+
+
+    protected void showInputDialog(final TextView txtView) {
+
+        // get prompts.xml view
+        LayoutInflater layoutInflater = LayoutInflater.from(MainActivity.this);
+        View promptView = layoutInflater.inflate(R.layout.input_dialog, null);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
+        alertDialogBuilder.setView(promptView);
+        alertDialogBuilder.setTitle("Oyuncu ismi giriniz");
+
+        final EditText editText = (EditText) promptView.findViewById(R.id.edittext);
+        editText.setHint("İsim Giriniz");
+        editText.setMaxWidth(20);
+        // setup a dialog window
+        alertDialogBuilder.setCancelable(false)
+                .setPositiveButton("TAMAM", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        String name="";
+                        name=editText.getText().toString();
+
+
+                        if(!name.equals("")){
+                            txtView.setText(name);
+
+                        }
+                        else
+                            showToast("İsim alanına giriş yapınız.");
+                    }
+                })
+                .setNegativeButton("GERİ",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+        // create an alert dialog
+        AlertDialog alert = alertDialogBuilder.create();
+        alert.show();
 
 
 

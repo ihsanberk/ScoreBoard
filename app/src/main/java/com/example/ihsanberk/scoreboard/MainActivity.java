@@ -308,12 +308,12 @@ public class MainActivity extends AppCompatActivity {
     }
     public void MaksimumYazdir(int maksimum,int oyuncu){
         if(oyuncu==1)
-            txt_max_score1.setText("En Yüksek Seri : "+maksimum);
+            txt_max_score1.setText("Yüksek Seri : "+maksimum);
         if(oyuncu==2)
-            txt_max_score2.setText("En Yüksek Seri : "+maksimum);
+            txt_max_score2.setText("Yüksek Seri : "+maksimum);
         if(oyuncu==0){
-            txt_max_score1.setText("En Yüksek Seri : "+0);
-            txt_max_score2.setText("En Yüksek Seri : "+0);
+            txt_max_score1.setText("Yüksek Seri : "+0);
+            txt_max_score2.setText("Yüksek Seri : "+0);
         }
     }
 

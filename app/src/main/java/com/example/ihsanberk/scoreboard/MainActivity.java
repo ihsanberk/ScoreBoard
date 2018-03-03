@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.text.InputType;
 import android.text.format.DateFormat;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -70,8 +71,8 @@ public class MainActivity extends AppCompatActivity {
 
         db= openOrCreateDatabase("OyunArsiv", MODE_PRIVATE,null);
         String createQuery= "Create table if not exists matchs ( id integer primary key autoincrement,ponename text, ptwoname text, " +
-                                                    "handcount int, ponescore int, ptwoscore int, poneaverage text, ptwoaverage text, " +
-                                                    "ponemax int, ptwomax int , date text);";
+                "handcount int, ponescore int, ptwoscore int, poneaverage text, ptwoaverage text, " +
+                "ponemax int, ptwomax int , date text);";
         db.execSQL(createQuery);
         db.close();
 
@@ -100,86 +101,55 @@ public class MainActivity extends AppCompatActivity {
         btn_player1_plus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cekilen_sayi_bir=cekilen_sayi_bir+1;
-                txt_player1_score.setText(""+cekilen_sayi_bir);
-                hand_flag_bir=true;
+                ponePlus();
+
             }
         });
 
         btn_player1_minus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(cekilen_sayi_bir>0){
-                    cekilen_sayi_bir=cekilen_sayi_bir-1;
-                    txt_player1_score.setText(""+cekilen_sayi_bir);
-                }
-                else if(!hand_flag_bir) {
-                    if(toplam_sayi_bir>0)
-                        toplam_sayi_bir--;
-                    YazdirHepsi();
-                }
+
+                poneMinus();
+
 
             }
         });
         btn_player1_enter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                toplam_sayi_bir=toplam_sayi_bir+cekilen_sayi_bir;
-                SayiYazdir(toplam_sayi_bir,txt_player1_score);
-                istaka_sayisi++;
-                if(maks_sayi_bir<cekilen_sayi_bir)
-                    maks_sayi_bir=cekilen_sayi_bir;
-                cekilen_sayi_bir=0;
-                hand_flag_bir=false;
-                hand_flag=true; //player 1 enter a bastı player 2 ıstaka arttırmayacak
-                YazdirHepsi();
+                poneEnter();
+
             }
         });
 // player 2 actions
         btn_player2_plus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cekilen_sayi_iki=cekilen_sayi_iki+1;
-                txt_player2_score.setText(""+cekilen_sayi_iki);
-                hand_flag_iki=true;
+                ptwoPlus();
+
             }
         });
 
         btn_player2_minus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(cekilen_sayi_iki>0){
-                    cekilen_sayi_iki=cekilen_sayi_iki-1;
-                    txt_player2_score.setText(""+cekilen_sayi_iki);
-                }
-                else if(!hand_flag_iki) {
-                    if(toplam_sayi_iki>0)
-                        toplam_sayi_iki--;
-                    YazdirHepsi();
-                }
+                ptwoMinus();
+
 
             }
         });
         btn_player2_enter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                toplam_sayi_iki=toplam_sayi_iki+cekilen_sayi_iki;
-                SayiYazdir(toplam_sayi_iki,txt_player2_score);
-                if (!hand_flag)
-                    istaka_sayisi++;
-                if(maks_sayi_iki<cekilen_sayi_iki)
-                    maks_sayi_iki=cekilen_sayi_iki;
-                cekilen_sayi_iki=0;
-                hand_flag_iki=false;
-                hand_flag=false; //player 2 enter a basti
-                YazdirHepsi();
+                ptwoEnter();
+
             }
         });
 
         btn_reset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 InıtıalizedFields();
 
             }
@@ -226,7 +196,7 @@ public class MainActivity extends AppCompatActivity {
         if(istaka_sayisi>0){
             AddTable(match);
             showToast("Skor Kaydedildi.");
-           // Toast.makeText(this,"Skor Kaydedildi.",Toast.LENGTH_SHORT).show();
+            // Toast.makeText(this,"Skor Kaydedildi.",Toast.LENGTH_SHORT).show();
         }
         if(istaka_sayisi<1){
             showToast("Kaydedilecek Skor bulunmamaktadır!!!");
@@ -250,9 +220,9 @@ public class MainActivity extends AppCompatActivity {
         db =openOrCreateDatabase("OyunArsiv", MODE_PRIVATE,null);
         //tarih nasıl alınır yazılacak
         String matchDate = "23.09.1988 05:30:00";
-       // java.util.Date date= new java.util.Date();
+        // java.util.Date date= new java.util.Date();
 
-       // java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd.MM.YYYY HH:mm:ss");
+        // java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd.MM.YYYY HH:mm:ss");
         matchDate = new java.text.SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new java.util.Date());
 
 
@@ -308,12 +278,12 @@ public class MainActivity extends AppCompatActivity {
     }
     public void MaksimumYazdir(int maksimum,int oyuncu){
         if(oyuncu==1)
-            txt_max_score1.setText("En Yüksek Seri : "+maksimum);
+            txt_max_score1.setText("Yüksek Seri : "+maksimum);
         if(oyuncu==2)
-            txt_max_score2.setText("En Yüksek Seri : "+maksimum);
+            txt_max_score2.setText("Yüksek Seri : "+maksimum);
         if(oyuncu==0){
-            txt_max_score1.setText("En Yüksek Seri : "+0);
-            txt_max_score2.setText("En Yüksek Seri : "+0);
+            txt_max_score1.setText("Yüksek Seri : "+0);
+            txt_max_score2.setText("Yüksek Seri : "+0);
         }
     }
 
@@ -358,6 +328,125 @@ public class MainActivity extends AppCompatActivity {
 
         Intent OpenHistory = new Intent(this, Main2Activity.class);
         startActivity(OpenHistory);
+    }
+
+    public void ponePlus(){
+        cekilen_sayi_bir=cekilen_sayi_bir+1;
+        txt_player1_score.setText(""+cekilen_sayi_bir);
+        hand_flag_bir=true;
+    }
+    public void poneMinus(){
+        if(cekilen_sayi_bir>0){
+            cekilen_sayi_bir=cekilen_sayi_bir-1;
+            txt_player1_score.setText(""+cekilen_sayi_bir);
+        }
+        else if(!hand_flag_bir) {
+            if(toplam_sayi_bir>0)
+                toplam_sayi_bir--;
+            YazdirHepsi();
+        }
+
+    }
+    public void poneEnter(){
+        toplam_sayi_bir=toplam_sayi_bir+cekilen_sayi_bir;
+        SayiYazdir(toplam_sayi_bir,txt_player1_score);
+        istaka_sayisi++;
+        if(maks_sayi_bir<cekilen_sayi_bir)
+            maks_sayi_bir=cekilen_sayi_bir;
+        cekilen_sayi_bir=0;
+        hand_flag_bir=false;
+        hand_flag=true; //player 1 enter a bastı player 2 ıstaka arttırmayacak
+        YazdirHepsi();
+
+    }
+    public void ptwoPlus(){
+        cekilen_sayi_iki=cekilen_sayi_iki+1;
+        txt_player2_score.setText(""+cekilen_sayi_iki);
+        hand_flag_iki=true;
+
+    }
+    public void ptwoMinus(){
+        if(cekilen_sayi_iki>0){
+            cekilen_sayi_iki=cekilen_sayi_iki-1;
+            txt_player2_score.setText(""+cekilen_sayi_iki);
+        }
+        else if(!hand_flag_iki) {
+            if(toplam_sayi_iki>0)
+                toplam_sayi_iki--;
+            YazdirHepsi();
+        }
+
+    }
+    public void ptwoEnter(){
+        toplam_sayi_iki=toplam_sayi_iki+cekilen_sayi_iki;
+        SayiYazdir(toplam_sayi_iki,txt_player2_score);
+        if (!hand_flag)
+            istaka_sayisi++;
+        if(maks_sayi_iki<cekilen_sayi_iki)
+            maks_sayi_iki=cekilen_sayi_iki;
+        cekilen_sayi_iki=0;
+        hand_flag_iki=false;
+        hand_flag=false; //player 2 enter a basti
+        YazdirHepsi();
+
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_4:   //player 1 ileri tuşu
+            {    //your Action code
+                ponePlus();
+                return true;
+            }
+            case KeyEvent.KEYCODE_7:   //player 1 geri tuşu
+            {    //your Action code
+                poneMinus();
+                return true;
+            }
+            case KeyEvent.KEYCODE_1:   //player 1 enter tuşu
+            {    //your Action code
+                poneEnter();
+                return true;
+            }
+            case KeyEvent.KEYCODE_5:   //player 2 ileri tuşu
+            {    //your Action code
+                ptwoPlus();
+                return true;
+            }
+            case KeyEvent.KEYCODE_8:   //player 2 geri tuşu
+            {    //your Action code
+                ptwoMinus();
+                return true;
+            }
+            case KeyEvent.KEYCODE_2:   //player 2 enter tuşu
+            {    //your Action code
+                ptwoEnter();
+                return true;
+            }case KeyEvent.KEYCODE_3:   //macı kaydet
+            {    //your Action code
+                RecordMatch();
+                return true;
+            }case KeyEvent.KEYCODE_ENTER:   //Reset
+            {    //your Action code
+                InıtıalizedFields();
+                return true;
+            }
+            case KeyEvent.KEYCODE_6:   //player 1 ileri tuşu
+            {    //your Action code
+                ponePlus();
+                return true;
+            }
+
+
+
+
+
+
+
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
 
